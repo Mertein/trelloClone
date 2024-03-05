@@ -28,11 +28,11 @@ const handler = async (data: InputType): Promise<ReturnType> => {
     imageUserName       
   ] = image.split("|");
 
-  // if(!imageId || !imageThumbUrl || !imageFullUrl || !imageLinkHTML || !imageUserName) {
-  //   return {
-  //     error: "Faltan datos. Hubo un error al crear el tablero."
-  //   };
-  // }
+  if(!imageId || !imageThumbUrl || !imageFullUrl || !imageLinkHTML || !imageUserName) {
+    return {
+      error: "Faltan datos. Hubo un error al crear el tablero."
+    };
+  }
 
   let board;
 
@@ -40,8 +40,15 @@ const handler = async (data: InputType): Promise<ReturnType> => {
     board = await db.board.create({
       data: {
         title,
+        imageId,
+        imageThumbUrl,
+        imageFullUrl,
+        imageLinkHTML,
+        imageUserName,
+        orgId,
       }
     });
+    
   } catch (error) {
     return {
       error: "Hubo un error al crear el tablero."
