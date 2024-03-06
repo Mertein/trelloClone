@@ -6,7 +6,7 @@ interface DashBoardLayoutProps {
 
 const DashboardLayout = ({children} : DashBoardLayoutProps) => {
   return ( 
-    <div>
+    <div className="h-full">
       <NavBar/>
       {children}
     </div>
