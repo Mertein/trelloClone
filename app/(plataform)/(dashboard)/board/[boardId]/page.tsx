@@ -31,7 +31,7 @@ export default async function BoardIdPage ({params} : BoardIdPageProps) {
       }
     },
     orderBy: {
-      createAt: 'asc'
+      order: "asc",
     },
   });
   

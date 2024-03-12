@@ -27,8 +27,8 @@ model Board {
   lists         List[]
   
 
-  createAt  DateTime @default(now())
-  updateAt  DateTime @updatedAt
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
 
 }
 
@@ -42,8 +42,8 @@ model List {
 
   cards   Card[]
 
-  createAt  DateTime @default(now())
-  updateAt  DateTime @updatedAt
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
 }
 
 model Card {
@@ -55,6 +55,6 @@ model Card {
   listId String
   list   List @relation(fields: [listId], references: [id], onDelete: Cascade)
 
-  createAt DateTime @default(now())
-  updateAt DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
