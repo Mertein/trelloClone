@@ -17,6 +17,7 @@ import { FormPicker } from './form-picker';
 import { useRouter } from 'next/navigation';
 import { ElementRef, useRef } from 'react';
 import { toast } from 'sonner';
+import { useProModal } from '@/hooks/use-pro-modal';
 
 
 interface FormPopoverProps {
@@ -34,6 +35,7 @@ export const FormPopover= ({
 } : FormPopoverProps ) => {
   const closeRef = useRef<ElementRef<'button'>>(null);
   const router = useRouter();
+  const proModal = useProModal();
   const {execute,fieldErrors} = useAction(createBoard, {
     onSuccess: (data) =>  {
       toast.success('Tablero creado');
@@ -42,6 +44,7 @@ export const FormPopover= ({
     },
     onError: (error) => {
       toast.error(error);
+      proModal.onOpen();
     }
   });
 

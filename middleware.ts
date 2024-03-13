@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
  
 export default authMiddleware({
   // Routes that can be accessed while signed out
-  publicRoutes: ["/"],
+  publicRoutes: ["/", "/api/webhook"],
   afterAuth(auth, req) {
     if(auth.userId && auth.isPublicRoute) {
       let path = '/select-org';

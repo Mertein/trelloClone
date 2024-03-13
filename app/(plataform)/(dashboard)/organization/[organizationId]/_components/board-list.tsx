@@ -8,6 +8,7 @@ import { redirect } from "next/navigation";
 import { Skeleton } from "@/components/ui/skeleton";
 import { getAvailableCount } from "@/lib/org-limit";
 import { MAX_FREE_BOARDS } from "@/constants/boards";
+import { checkSubscription } from "@/lib/subscription";
 export const BoardList = async () => {
   const {orgId} = auth();
   if(!orgId) {
@@ -23,6 +24,7 @@ export const BoardList = async () => {
   });
 
   const availableCount = await getAvailableCount();
+  const isPro = await checkSubscription();
 
   return (
     <div className="space-y-2">
@@ -47,7 +49,7 @@ export const BoardList = async () => {
             items-center justify-center hover:opacity-75 transition" >
                 <p className="text-sm">Crea un nuevo Tablero</p>
                 <span className="text-xs">
-                  {`${MAX_FREE_BOARDS - availableCount} restantes`}
+                  {isPro ? "Sin Limites!" : `${MAX_FREE_BOARDS - availableCount} restantes`}
                 </span>
                 <Hint sideOffset={40} description={`
                   La cuenta gratuita te permite crear hasta 5 tableros. Para tener tableros ilimitados, actualiza tu plan.
