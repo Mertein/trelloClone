@@ -2,12 +2,12 @@ import { HelpCircle, User2 } from "lucide-react"
 import {db} from "@/lib/db";
 import { auth } from "@clerk/nextjs";
 import Link from "next/link";
-import OrgaizationIdLayout from "../layout";
 import { Hint } from "@/components/hint";
 import { FormPopover } from "@/components/form/form-popover";
 import { redirect } from "next/navigation";
-import Image from "next/image";
 import { Skeleton } from "@/components/ui/skeleton";
+import { getAvailableCount } from "@/lib/org-limit";
+import { MAX_FREE_BOARDS } from "@/constants/boards";
 export const BoardList = async () => {
   const {orgId} = auth();
   if(!orgId) {
@@ -19,8 +19,11 @@ export const BoardList = async () => {
     },
     orderBy: {
       createdAt: 'desc',
-    }
-  })
+    },
+  });
+
+  const availableCount = await getAvailableCount();
+
   return (
     <div className="space-y-2">
       <div className="flex items-center font-semibold text-lg text-neutral-700">
@@ -43,7 +46,9 @@ export const BoardList = async () => {
             <div role='button' className="aspect-video relative h-full w-full bg-muted rounded-sm flex flex-col gap-y-1
             items-center justify-center hover:opacity-75 transition" >
                 <p className="text-sm">Crea un nuevo Tablero</p>
-                <span className="text-xs">5 restantes</span>
+                <span className="text-xs">
+                  {`${MAX_FREE_BOARDS - availableCount} restantes`}
+                </span>
                 <Hint sideOffset={40} description={`
                   La cuenta gratuita te permite crear hasta 5 tableros. Para tener tableros ilimitados, actualiza tu plan.
                   `} 

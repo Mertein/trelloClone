@@ -59,6 +59,14 @@ model Card {
   updatedAt DateTime @updatedAt
 }
 
+model OrgLimit {
+  id String @id @default(uuid())
+  orgId String @unique
+  count Int @default(0)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
 
 enum ACTION {
   CREATE

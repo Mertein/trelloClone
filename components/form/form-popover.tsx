@@ -14,9 +14,9 @@ import { Button } from '@/components/ui/button';
 import { X } from 'lucide-react';
 import { createBoard } from "@/actions/create-board/index";
 import { FormPicker } from './form-picker';
-import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
 import { ElementRef, useRef } from 'react';
+import { toast } from 'sonner';
 
 
 interface FormPopoverProps {
@@ -40,10 +40,10 @@ export const FormPopover= ({
       closeRef.current?.click();
       router.push(`/board/${data.id}`);
     },
-    onError(error) {
-      toast.error(error)
-    },
-  })
+    onError: (error) => {
+      toast.error(error);
+    }
+  });
 
   const onSubmit = (formData: FormData)  => {
     const title = formData.get('title') as string;
@@ -63,7 +63,7 @@ export const FormPopover= ({
             sideOffset={sideOffset}
           >
             <div className='text-sm font-medium text-center text-neutral-600 pb-4'>
-              CreateBoard
+              Crear Tablero
             </div>
             <PopoverClose ref={closeRef} asChild>
               <Button 

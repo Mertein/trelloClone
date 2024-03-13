@@ -1,5 +1,4 @@
 "use server";
-
 import { auth } from "@clerk/nextjs";
 import { revalidatePath } from "next/cache";
 
@@ -10,6 +9,7 @@ import { InputType, ReturnType } from "./types";
 import { CreateBoard } from "./schema";
 import { createAuditLog } from "@/lib/create-audit-log";
 import { ACTION, ENTITY_TYPE } from "@prisma/client";
+import { hasAvailableCount, incrementAvailableCount } from "@/lib/org-limit";
 
 const handler = async (data: InputType): Promise<ReturnType> => {
   const {userId, orgId} = auth();
@@ -20,8 +20,14 @@ const handler = async (data: InputType): Promise<ReturnType> => {
     };
   };
 
-  const {title, image} = data;
+  const canCreate = await hasAvailableCount();
+  if(!canCreate) {
+    return {error: "Alcanzaste el límite de tableros. Actualiza tu plan para crear más tableros."};
+  }
 
+
+  const {title, image} = data;
+ 
   const [
     imageId,
     imageThumbUrl,
@@ -50,6 +56,8 @@ const handler = async (data: InputType): Promise<ReturnType> => {
         orgId,
       }
     });
+
+    await incrementAvailableCount();
 
     await createAuditLog({
       action: ACTION.CREATE,
