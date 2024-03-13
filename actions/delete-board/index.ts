@@ -7,6 +7,8 @@ import { db } from "@/lib/db";
 import { InputType, ReturnType } from "./types";
 import { DeletedBoard } from "./schema";
 import { redirect } from "next/navigation";
+import { ACTION, ENTITY_TYPE } from "@prisma/client";
+import { createAuditLog } from "@/lib/create-audit-log";
 
 
 const handler = async (data: InputType) : Promise<ReturnType> => {
@@ -28,7 +30,15 @@ const handler = async (data: InputType) : Promise<ReturnType> => {
         orgId,
         id,
       },
-    })
+    });
+
+    await createAuditLog({
+      action: ACTION.DELETE,
+      entityType: ENTITY_TYPE.BOARD,
+      entityTitle: board.title,
+      entityId: board.id,
+    });
+    
   } catch(error) {
     return {
       error: "Hubo un error al eliminar el tablero.",

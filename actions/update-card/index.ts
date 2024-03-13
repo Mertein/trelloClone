@@ -6,6 +6,8 @@ import { createSafeAction } from "@/lib/create-safe-action";
 import { db } from "@/lib/db";
 import { InputType, ReturnType } from "./types";
 import { UpdateCard } from "./schema";
+import { createAuditLog } from "@/lib/create-audit-log";
+import { ACTION, ENTITY_TYPE } from "@prisma/client";
 
 
 const handler = async (data: InputType) : Promise<ReturnType> => {
@@ -33,8 +35,16 @@ const handler = async (data: InputType) : Promise<ReturnType> => {
       },
       data: {
         ...values,
-      }
-    })
+      },
+    });
+
+    await createAuditLog({
+      action: ACTION.UPDATE,
+      entityType: ENTITY_TYPE.CARD,
+      entityTitle: card.title,
+      entityId: card.id,
+    });
+
   } catch(error) {
     return {
       error: "Hubo un error al actualizar la tarjeta.",

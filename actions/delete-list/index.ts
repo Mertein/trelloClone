@@ -7,6 +7,8 @@ import { db } from "@/lib/db";
 import { InputType, ReturnType } from "./types";
 import { DeletedList } from "./schema";
 import { redirect } from "next/navigation";
+import { createAuditLog } from "@/lib/create-audit-log";
+import { ACTION, ENTITY_TYPE } from "@prisma/client";
 
 
 const handler = async (data: InputType) : Promise<ReturnType> => {
@@ -31,7 +33,15 @@ const handler = async (data: InputType) : Promise<ReturnType> => {
           orgId,
         }
       },
-    })
+    });
+
+    await createAuditLog({
+      action: ACTION.DELETE,
+      entityType: ENTITY_TYPE.LIST,
+      entityTitle: list.title,
+      entityId: list.id,
+    });
+
   } catch(error) {
     return {
       error: "Hubo un error al eliminar la lista.",
