@@ -65,20 +65,20 @@ export const Header = ({
  
 
   return (
-    <div>
-      <Layout  />
-      <div>
+    <div className="flex items-center gap-x-3 mb-6 w-full">
+      <Layout className="h-5 w-5 text-neutral-700" />
+      <div className="w-full">
         <form action={onSubmit}>
           <FormInput
             id='title'
             ref={inputRef}
             onBlur={onBlur}
             defaultValue={title}
-            className=""
+            className="font-semibold text-xl px-1 text-neutral-700 bg-transparent border-transparent relative -left-1.5 w-[95%] focus-visible:bg-white focus-visible:border-input mb-0.5 truncate"
           />
         </form>
-        <p className="">
-          En Lista <span className="">{data.list.title}</span>
+        <p className="text-sm text-muted-foreground">
+          En Lista <span className="underline">{data.list.title}</span>
         </p>
       </div>
     </div>
@@ -87,11 +87,11 @@ export const Header = ({
 
 Header.Skeleton = () => {
   return (
-    <div>
-      <Skeleton className="" />
-      <div>
-        <Skeleton className="" />
-        <Skeleton className="" />
+    <div className="flex items-start gap-x-3 mb-6 ">
+      <Skeleton className="h-6 w-6 mt-1 bg-neutral-200" />
+      <div >
+        <Skeleton className="w-24 h-6 mb-1 bg-neutral-200" />
+        <Skeleton className="w-12 h-4 bg-neutral-200" />
       </div>
     </div>
   );
