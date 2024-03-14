@@ -9,26 +9,28 @@ interface BoardIdProps {
   params: {boardId: string;};
 }
 
-export async function generateMetaData({
-  params,
-} : BoardIdProps) {
+export async function generateMetadata({ 
+  params
+ }: {
+  params: { boardId: string; };
+ }) {
   const { orgId } = auth();
 
-  if(!orgId) {
+  if (!orgId) {
     return {
-      title: 'Tablero',
-    }
+      title: "Tablero",
+    };
   }
 
   const board = await db.board.findUnique({
     where: {
       id: params.boardId,
-      orgId,
+      orgId
     }
   });
 
   return {
-    title: board?.title || 'Tablero',
+    title: board?.title || "Tablero",
   };
 }
 
