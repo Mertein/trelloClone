@@ -29,7 +29,7 @@ export const createAuditLog = async  (props: Props) => {
         entityId,
         orgId,
         userId: user.id,
-        userName: user?.firstName + " " + user?.lastName,
+        userName: user?.lastName !== null  ? user?.firstName + " "  + user?.lastName : user?.firstName as string,
         userImage: user.imageUrl,
       },
     });

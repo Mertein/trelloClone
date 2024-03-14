@@ -9,6 +9,8 @@ import { DeletedBoard } from "./schema";
 import { redirect } from "next/navigation";
 import { ACTION, ENTITY_TYPE } from "@prisma/client";
 import { createAuditLog } from "@/lib/create-audit-log";
+import { checkSubscription } from "@/lib/subscription";
+import { decreaseAvailableCount } from "@/lib/org-limit";
 
 
 const handler = async (data: InputType) : Promise<ReturnType> => {
@@ -19,6 +21,8 @@ const handler = async (data: InputType) : Promise<ReturnType> => {
       error: "No autorizado",
     }
   };
+
+  const isPro = await checkSubscription();
 
   const {id} = data;
 
@@ -31,6 +35,10 @@ const handler = async (data: InputType) : Promise<ReturnType> => {
         id,
       },
     });
+
+    if(!isPro) {
+      await decreaseAvailableCount();
+    }
 
     await createAuditLog({
       action: ACTION.DELETE,

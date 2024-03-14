@@ -68,7 +68,7 @@ const Sidebar = ({
     <>
       <div className="flex items-center text-xs font-medium mb-1">
           <span>
-            WorkSpace
+            Espacio de trabajo
           </span>
           <Button 
             asChild

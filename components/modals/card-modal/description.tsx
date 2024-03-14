@@ -37,7 +37,7 @@ export const Description = ({
         queryKey: ['card-logs', data.id]
       });
 
-      toast.success(`Tiutlo "${data}" actualizado`)
+      toast.success(`Tiutlo "${data.title}" actualizado`)
       disableEditing();
     },
     onError(error) {

@@ -47,9 +47,9 @@ export const BoardList = async () => {
           <FormPopover sideOffset={10} side='right' >
             <div role='button' className="aspect-video relative h-full w-full bg-muted rounded-sm flex flex-col gap-y-1
             items-center justify-center hover:opacity-75 transition" >
-                <p className="text-sm">Crea un nuevo Tablero</p>
+                <p className="text-sm p-2">Crear un nuevo tablero</p>
                 <span className="text-xs">
-                  {isPro ? "Sin Limites!" : `${MAX_FREE_BOARDS - availableCount} restantes`}
+                  {isPro ? "Sin límites" : `${MAX_FREE_BOARDS - availableCount} restantes`}
                 </span>
                 <Hint sideOffset={40} description={`
                   La cuenta gratuita te permite crear hasta 5 tableros. Para tener tableros ilimitados, actualiza tu plan.
